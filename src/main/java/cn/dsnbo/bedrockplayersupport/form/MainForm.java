@@ -48,9 +48,9 @@ public class MainForm {
             }
         }
         CustomForm.Builder form = CustomForm.builder()
-                .title("§6§l传送表单")
-                .dropdown("§a请选择传送类型", List.of("TPA", "TPAHERE"))
-                .dropdown("§a请选择要传送的玩家", onlinePlayerNameList)
+                .title("§l传送菜单")
+                .dropdown("请选择传送类型", List.of("传送到对方的位置", "将对方传送到你的位置"))
+                .dropdown("选择玩家", onlinePlayerNameList)
                 .validResultHandler((customForm, customFormResponse) -> {
                     if (customFormResponse.asDropdown(0) == 0) {
                         player.chat("/tpa " + onlinePlayerNameList.get(customFormResponse.asDropdown(1)));
@@ -67,7 +67,7 @@ public class MainForm {
         UUID receiverUuid = receiver.getUniqueId();
         if (tpType == TeleportType.Tpa) {
             form = ModalForm.builder()
-                    .title("§6§l玩家请求传送到你的位置 §f(TPA)")
+                    .title("§l收到新的传送请求")
                     .content("玩家 " + requestorName + " 请求传送到你的位置")
                     .button1("§a同意")
                     .button2("§c拒绝")
@@ -79,8 +79,8 @@ public class MainForm {
                     });
         } else if (tpType == TeleportType.TpaHere) {
             form = ModalForm.builder()
-                    .title("§6§l玩家请求你传送到他的位置 §f(TPAHERE)")
-                    .content("玩家 " + requestorName + " 请求你传送到他的位置")
+                    .title("§l收到新的传送请求")
+                    .content("玩家 " + requestorName + " 请求把你传送到他的位置")
                     .button1("§a同意")
                     .button2("§c拒绝")
                     .validResultHandler((modalForm, modalFormResponse) -> {
@@ -101,9 +101,9 @@ public class MainForm {
             }
         }
         CustomForm.Builder form = CustomForm.builder()
-                .title("§6§l信息表单")
-                .dropdown("§a请选择接收信息的玩家", onlinePlayerName)
-                .input("§a请填写要发送的信息")
+                .title("§l私信")
+                .dropdown("请选择接收私信的玩家", onlinePlayerName)
+                .input("请填写要发送的消息")
                 .validResultHandler(((response, customFormResponse) -> {
                     player.chat("/msg " + onlinePlayerName.get(customFormResponse.asDropdown(0)) + " " + customFormResponse.asInput(1));
                 }));
@@ -112,8 +112,8 @@ public class MainForm {
 
     public void openBedrockBackForm(Player player) {
         ModalForm.Builder form = ModalForm.builder()
-                .title("§6§l返回死亡点表单")
-                .content("是否返回上个死亡点")
+                .title("§l你死掉了")
+                .content("是否要返回上个死亡点")
                 .button1("§a是")
                 .button2("§c否")
                 .validResultHandler(((modalForm, modalFormResponse) -> {
